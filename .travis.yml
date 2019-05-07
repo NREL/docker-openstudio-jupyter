@@ -1,0 +1,10 @@
+sudo: required
+language: python
+services:
+  - docker
+install:
+  - echo "Nothing to install"
+script:
+  - docker build -t openstudio-jupyter:latest .
+after_success:
+  - ./deploy_docker.sh
