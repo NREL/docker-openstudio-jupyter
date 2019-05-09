@@ -11,7 +11,8 @@ RUN mkdir /home/$NB_USER/notebooks && chown $NB_USER:users /home/$NB_USER/notebo
 #copy notebooks over and set permissions to joyvan
 COPY ./notebooks/parallelCoords.ipynb /home/$NB_USER/notebooks/parallelCoords.ipynb
 RUN chown $NB_USER:users /home/$NB_USER/notebooks/parallelCoords.ipynb
-     
+
+ARG GITHUB_PAT     
 USER $NB_UID     
 RUN conda install --quiet --yes \
     'r-rstan' \
