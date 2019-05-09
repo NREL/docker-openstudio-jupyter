@@ -50,7 +50,8 @@ install_and_verify = function(package_name, configure.args=c(), repos=c('http://
 
 install_github_and_verify = function(repo,package_name){
     print(paste('Calling install for package ',repo,'/',package_name, sep=''))
-    devtools::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
+    remotes::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
+    #devtools::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
     if (!require(package_name, character.only = TRUE)){
         print('Error installing package, check log')
         quit(status=1)
@@ -68,7 +69,9 @@ install_github_and_verify = function(repo,package_name){
 #install_and_verify('sensitivity')
 install_and_verify('rstan')
 install_and_verify('fields')
-install_and_verify('devtools')
-library('devtools')
+#install_and_verify('devtools')
+#library('devtools')
+install_and_verify('remotes')
+library('remotes')
 install_github_and_verify('timelyportfolio','parcoords')
 

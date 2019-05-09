@@ -5,6 +5,6 @@ services:
 install:
   - echo "Nothing to install"
 script:
-  - docker build -t openstudio-jupyter:latest --build-arg GITHUB_PAT=${GITHUB_PAT} .
+  - docker build -t openstudio-jupyter:latest --build-arg GITHUB_PAT=$GITHUB_PAT .
 after_success:
   - ./deploy_docker.sh
