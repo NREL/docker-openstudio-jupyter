@@ -19,7 +19,7 @@ RUN conda install --quiet --yes \
     'r-fields' \
     'r-plotly' \
     'r-devtools' \
-    && R -e "devtools::install_github('timelyportfolio/parcoords', auth_token = $GITHUB_PAT)"
+    && R -e "devtools::install_github('timelyportfolio/parcoords', auth_token = '$GITHUB_PAT')"
 
 #trust all notebooks
 RUN find /home/$NB_USER/notebooks -name '*.ipynb' -exec jupyter trust {} \;
