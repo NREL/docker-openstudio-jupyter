@@ -11,14 +11,21 @@ RUN mkdir /home/$NB_USER/notebooks && chown $NB_USER:users /home/$NB_USER/notebo
 #copy notebooks over and set permissions to joyvan
 COPY ./notebooks/parallelCoords.ipynb /home/$NB_USER/notebooks/parallelCoords.ipynb
 RUN chown $NB_USER:users /home/$NB_USER/notebooks/parallelCoords.ipynb
-     
-USER $NB_UID     
-RUN conda install --quiet --yes \
-    'r-rstan' \
-    'r-fields' \
-    'r-plotly' \
-    'r-devtools' \
-    && R -e "devtools::install_github('timelyportfolio/parcoords')"
+ 
+USER $NB_UID
+ARG GITHUB_PAT 
+
+# Add in the additional R packages
+ADD /install_packages.R install_packages.R
+RUN Rscript install_packages.R
+
+#ARG GITHUB_PAT
+#RUN conda install --quiet --yes \
+#    'r-rstan' \
+#    'r-fields' \
+#    'r-plotly' \
+#    'r-devtools' \
+#    && R -e "devtools::install_github('timelyportfolio/parcoords')"
 
 #trust all notebooks
 RUN find /home/$NB_USER/notebooks -name '*.ipynb' -exec jupyter trust {} \;

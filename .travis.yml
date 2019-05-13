@@ -4,7 +4,11 @@ services:
   - docker
 install:
   - echo "Nothing to install"
-script:
-  - docker build -t openstudio-jupyter:latest .
+jobs:
+  include:
+    - stage: deploy
+      if: branch = master OR branch = develop
+      script:
+        - docker build -t openstudio-jupyter:latest --build-arg GITHUB_PAT=$GITHUB_PAT .
 after_success:
   - ./deploy_docker.sh
