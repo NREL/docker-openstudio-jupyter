@@ -24,7 +24,7 @@ if [ "${IMAGETAG}" != "skip" ] && [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
     echo "Tagging image as $IMAGETAG"
 
     docker login -u $DOCKER_USER -p $DOCKER_PASS
-    docker build -f Dockerfile -t nrel/openstudio-jupyter:$IMAGETAG -t nrel/openstudio-jupyter:latest .
+    docker build --build-arg GITHUB_PAT=$GITHUB_PAT -f Dockerfile -t nrel/openstudio-jupyter:$IMAGETAG -t nrel/openstudio-jupyter:latest .
     docker push nrel/openstudio-jupyter:$IMAGETAG
     docker push nrel/openstudio-jupyter:latest
 else
