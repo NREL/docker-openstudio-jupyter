@@ -50,9 +50,8 @@ install_and_verify = function(package_name, configure.args=c(), repos=c('http://
 
 install_github_and_verify = function(repo,package_name){
     print(paste('Calling install for package ',repo,'/',package_name, sep=''))
-    remotes::install_github(paste(repo,'/',package_name,sep=''))
-    #remotes::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
-    #devtools::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
+    #remotes::install_github(paste(repo,'/',package_name,sep=''))
+    remotes::install_github(paste(repo,'/',package_name,sep=''), quiet=TRUE)
     if (!require(package_name, character.only = TRUE)){
         print('Error installing package, check log')
         quit(status=1)
@@ -68,8 +67,6 @@ install_and_verify('triangle')
 #install_and_verify('combinat')
 #install_and_verify('DoE.base')
 #install_and_verify('sensitivity')
-#install_and_verify('rstan')
-#install_and_verify('fields')
 install_and_verify('zeallot')
 install_and_verify('shiny')
 install_and_verify('crosstalk')
