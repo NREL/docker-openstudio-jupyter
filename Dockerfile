@@ -16,16 +16,9 @@ USER $NB_UID
 ARG GITHUB_PAT 
 
 # Add in the additional R packages
+# these will live at /opt/conda/lib/R/library
 ADD /install_packages.R install_packages.R
 RUN Rscript install_packages.R
-
-#ARG GITHUB_PAT
-#RUN conda install --quiet --yes \
-#    'r-rstan' \
-#    'r-fields' \
-#    'r-plotly' \
-#    'r-devtools' \
-#    && R -e "devtools::install_github('timelyportfolio/parcoords')"
 
 #trust all notebooks
 RUN find /home/$NB_USER/notebooks -name '*.ipynb' -exec jupyter trust {} \;
