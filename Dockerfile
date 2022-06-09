@@ -1,35 +1,36 @@
-FROM jupyter/datascience-notebook
+# AUTHOR:           Brian Ball
+# DESCRIPTION:      OpenStudio / Jupyter notebook Docker Container
+#
+#  docker build . -t='os-jupyter'
+#  docker run -p 8888:8888 os-jupyter
 
-USER root
-#link gtar to tar for devtools::install_github to work
-RUN ln -s /bin/tar /bin/gtar
+#may include suffix
+ARG OPENSTUDIO_VERSION=3.4.0
+FROM nrel/openstudio:dev-3.4.1-alpha as base
+MAINTAINER Brian Ball brian.ball@nrel.gov
 
-#setup directory structure
-RUN mkdir /home/$NB_USER/data && chown $NB_USER:users /home/$NB_USER/data && chmod 775 /home/$NB_USER/data
-RUN mkdir /home/$NB_USER/notebooks && chown $NB_USER:users /home/$NB_USER/notebooks && chmod 775 /home/$NB_USER/notebooks
+ENV DEBIAN_FRONTEND=noninteractive
 
-#copy notebooks over and set permissions to joyvan
-COPY ./notebooks/parallelCoords.ipynb /home/$NB_USER/notebooks/parallelCoords.ipynb
-RUN chown $NB_USER:users /home/$NB_USER/notebooks/parallelCoords.ipynb
- 
-USER $NB_UID
-ARG GITHUB_PAT 
+RUN apt-get update && apt-get install -y \
+  ca-certificates \
+  emacs \
+  git \
+  locales \
+  locales-all \
+  python3-dev \
+  python3-pip \
+  jupyter \
+  sudo
 
-# Add in the additional R packages
-# these will live at /opt/conda/lib/R/library
-ADD /install_packages.R install_packages.R
-RUN Rscript install_packages.R
+RUN ln -s /usr/bin/python3 /usr/bin/python
+  
+RUN pip3 install --upgrade pip
+RUN pip3 install virtualenv
+RUN pip3 install --ignore-installed pyzmq terminado 
+RUN pip3 install jupyterlab
 
-#trust all notebooks
-RUN find /home/$NB_USER/notebooks -name '*.ipynb' -exec jupyter trust {} \;
+WORKDIR /workspace
+VOLUME /workspace
+EXPOSE 8888
 
-#start with no creditials, TODO: make secure for production
-CMD ["jupyter", \
-     "notebook", \
-     "--port=8888", \
-     "--no-browser", \
-     "--ip=0.0.0.0", \
-     "--allow-root", \
-     "--NotebookApp.token=''", \
-     "--NotebookApp.password=''", \
-     "--NotebookApp.iopub_data_rate_limit=1.0e10"]
+CMD ["jupyter-lab", "--ip=0.0.0.0","--port=8888" ,"--no-browser", "--allow-root", "--LabApp.token=''"]
