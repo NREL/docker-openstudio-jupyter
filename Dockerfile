@@ -3,6 +3,8 @@
 #
 #  docker build . -t='os-jupyter'
 #  docker run -p 8888:8888 os-jupyter
+#
+#  JupyterLab application directory is  /usr/local/share/jupyter/lab
 
 #may include suffix
 ARG OPENSTUDIO_VERSION=3.4.0
@@ -32,5 +34,8 @@ RUN pip3 install jupyterlab
 WORKDIR /workspace
 VOLUME /workspace
 EXPOSE 8888
+
+RUN gem install bundler cztop iruby
+RUN iruby register --force
 
 CMD ["jupyter-lab", "--ip=0.0.0.0","--port=8888" ,"--no-browser", "--allow-root", "--LabApp.token=''"]
