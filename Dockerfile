@@ -34,7 +34,7 @@ RUN pip3 install virtualenv
 RUN pip3 install --ignore-installed pyzmq terminado 
 RUN pip3 install jupyterlab
 
-RUN gem install bundler cztop iruby && \
+RUN gem install bundler cztop iruby rest-client open-uri && \
     iruby register --force
 
 #install PAT
@@ -55,6 +55,7 @@ RUN mkdir /examples/notebooks
 
 #copy notebooks over and set permissions
 COPY ./notebooks/submit_single_run.ipynb /examples/notebooks/submit_single_run.ipynb
+COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/submit_URBANopt.ipynb
 
 #trust all notebooks
 RUN find /examples/notebooks -name '*.ipynb' -exec jupyter trust {} \;
