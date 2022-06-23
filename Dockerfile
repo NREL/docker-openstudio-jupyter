@@ -43,7 +43,7 @@ RUN cd /opt && \
     /opt/OpenStudio-server/bin/openstudio_meta install_gems
 
 #install URBANopt
-RUN gem install urbanopt-cli
+RUN gem install urbanopt-cli rubyzip
 
 WORKDIR /examples
 RUN mkdir /examples/notebooks
@@ -51,7 +51,9 @@ RUN mkdir /examples/notebooks
 #copy notebooks over and set permissions
 COPY ./notebooks/submit_single_run.ipynb /examples/notebooks/submit_single_run.ipynb
 COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/submit_URBANopt.ipynb
-COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/create_URBANopt.ipynb
+COPY ./notebooks/create_URBANopt.ipynb /examples/notebooks/create_URBANopt.ipynb
+COPY ./notebooks/create_URBANopt_OSA.ipynb /examples/notebooks/create_URBANopt_OSA.ipynb
+COPY ./notebooks/URBANopt_template.json /examples/notebooks/URBANopt_template.json
 
 #trust all notebooks
 RUN find /examples/notebooks -name '*.ipynb' -exec jupyter trust {} \;
