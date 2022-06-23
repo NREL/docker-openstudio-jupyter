@@ -23,9 +23,6 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   jupyter \
   sudo
-
-# PAT dependencies
-# libc-ares2 libgconf-2-4 libgtk2.0-0 libnode64 libnss3 libqdbm14 libuv1 libx11-xcb1 libxss1 nodejs nodejs-doc
   
 RUN ln -s /usr/bin/python3 /usr/bin/python
   
@@ -37,11 +34,6 @@ RUN pip3 install jupyterlab
 RUN gem install bundler cztop iruby rest-client open-uri && \
     iruby register --force
 
-#install PAT
-#RUN curl -SLO https://github.com/NREL/OpenStudio-PAT/releases/download/v3.4.0/ParametricAnalysisTool-3.4.0-Linux.deb
-#RUN dpkg -i ParametricAnalysisTool-3.4.0-Linux.deb
-#/usr/local/ParametricAnalysisTool-3.4.0/pat_3.4.0/opt/Resources/OpenStudio-server/bin/openstudio_meta
-
 #install OpenStudio-server
 RUN cd /opt && \
     mkdir OpenStudio-server && \
@@ -50,12 +42,16 @@ RUN cd /opt && \
     cd bin && \
     /opt/OpenStudio-server/bin/openstudio_meta install_gems
 
+#install URBANopt
+RUN gem install urbanopt-cli
+
 WORKDIR /examples
 RUN mkdir /examples/notebooks
 
 #copy notebooks over and set permissions
 COPY ./notebooks/submit_single_run.ipynb /examples/notebooks/submit_single_run.ipynb
 COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/submit_URBANopt.ipynb
+COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/create_URBANopt.ipynb
 
 #trust all notebooks
 RUN find /examples/notebooks -name '*.ipynb' -exec jupyter trust {} \;
