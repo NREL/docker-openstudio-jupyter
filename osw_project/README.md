@@ -1,8 +1,9 @@
-# OpenStudio Notebooks
+# OpenStudio Example Notebooks
 
-Base image for using Jupyter Notebooks in OpenStudio Server.
-
-### Dependencies
+### Dependencies  
+The Ruby kernel notebooks require the IRuby gem  
+>gem install iruby  
+>iruby register --force  
 
 Create_OSA.ipynb requires Analysis-gem Version > 1.3.0.  To install the pre-release
 git clone the 
