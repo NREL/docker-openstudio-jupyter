@@ -7,8 +7,8 @@
 #  JupyterLab application directory is  /usr/local/share/jupyter/lab
 
 #may include suffix
-ARG OPENSTUDIO_VERSION=3.4.0
-FROM nrel/openstudio:dev-3.4.1-alpha as base
+ARG OPENSTUDIO_VERSION=3.5.1
+FROM nrel/openstudio:3.5.1 as base
 MAINTAINER Brian Ball brian.ball@nrel.gov
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -31,7 +31,7 @@ RUN pip3 install virtualenv
 RUN pip3 install --ignore-installed pyzmq terminado 
 RUN pip3 install jupyterlab
 
-RUN gem install bundler cztop iruby rest-client open-uri && \
+RUN gem install cztop iruby rest-client open-uri && \
     iruby register --force
 
 #install OpenStudio-server
@@ -45,6 +45,20 @@ RUN cd /opt && \
 #install URBANopt
 RUN gem install urbanopt-cli rubyzip
 
+#install OpenStudio-analysis-gem
+RUN cd /opt && \
+    mkdir OpenStudio-analysis-gem && \
+    cd OpenStudio-analysis-gem && \
+    git clone https://github.com/NREL/OpenStudio-analysis-gem.git . && \
+    git checkout osw_to_osa && \
+    bundle install && \
+    gem build openstudio-analysis.gemspec && \
+    gem install --local ./openstudio-analysis-1.3.0.pre.0.gem
+    
+#install OpenStudio Measure Gems
+RUN gem install openstudio-calibration
+RUN gem install openstudio-common-measures    
+
 WORKDIR /examples
 RUN mkdir /examples/notebooks
 
@@ -54,6 +68,7 @@ COPY ./notebooks/submit_URBANopt.ipynb /examples/notebooks/submit_URBANopt.ipynb
 COPY ./notebooks/create_URBANopt.ipynb /examples/notebooks/create_URBANopt.ipynb
 COPY ./notebooks/create_URBANopt_OSA.ipynb /examples/notebooks/create_URBANopt_OSA.ipynb
 COPY ./notebooks/URBANopt_template.json /examples/notebooks/URBANopt_template.json
+COPY ./osw_project /examples/notebooks
 
 #trust all notebooks
 RUN find /examples/notebooks -name '*.ipynb' -exec jupyter trust {} \;
