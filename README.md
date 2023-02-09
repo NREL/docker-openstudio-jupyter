@@ -1,8 +1,6 @@
 # docker-openstudio-jupyter
 
-[![Build Status](https://travis-ci.org/NREL/docker-openstudio-jupyter.svg?branch=master)](https://travis-ci.org/NREL/docker-openstudio-jupyter)
-
-Base image for using Jupyter Notebooks in OpenStudio Server.
+Docker container with IRuby notebooks with OpenStudio examples
 
 ### Build
 
