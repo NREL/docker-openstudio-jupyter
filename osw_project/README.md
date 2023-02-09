@@ -12,4 +12,6 @@ In a terminal run:
 >gem build  
 >gem install --local .\openstudio-analysis-1.3.0.pre.0.gem  
 
-
+#### install Measure Gems
+>gem install openstudio-calibration
+>gem install openstudio-common-measures
