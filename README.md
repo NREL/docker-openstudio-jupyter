@@ -1,21 +1,52 @@
-# docker-openstudio-jupyter
+## Jupyter Notebooks with OpenStudio SDK use examples in a Docker container.
 
-Docker container with IRuby notebooks with OpenStudio examples
+This repo contains a Docker container with IRuby Jupyter notebooks with examples using various functionality of the OpenStudio SDK.
+The examples include  
+#### URBANopt
+1. Creating an URBANopt workflow
+2. Creating an URBANopt OpenStudio Analysis (OSA) workflow for optimization
+3. Submitting an URBANopt job to a cloud based Server  
+#### Creating OpenStudio Workflow (OSW) and OpenStudio Analysis (OSA) jsons  
+1. Creating an OSW json to run several Measures on an example OpenStudio Model (OSM)  
+2. Adding a Calibration Measure to the OSW
+3. Turning the OSW into an OSA to use Algorithms such as Sensitivity Analysis and Optimization.  
 
-### Build
+The notebooks have several dependencies which are pre-installed in a Docker container.
+The intent is to make that part of the process easier for newer users.
+The notebooks can be used outside of the containers, provided the dependencies are installed locally.
+The user needs to install Docker and then either build the container locally or pull the container from dockerhub.
+Instructions to do that follow:
 
-Installing the [docker tool-kit](https://docs.docker.com/engine/installation/) version 17.03.1 or later, as described in the linked documentation. Once the tool-kit is installed and activated, run the command  
+#### Installing Docker  
+1. Go to the official Docker website and download the appropriate installer for your platform: [www.docker.com](https://www.docker.com/get-started)  
+2. Once the download is complete, run the installer and follow the on-screen instructions.  
+3. After the installation is complete, open a terminal or command prompt and verify that Docker is installed by typing the following command:  
+`docker --version`  
+This should display the version of Docker installed on your system.  
 
->`docker build . -t "os-jupyter"`  
+4. If you plan to use Docker as a non-root user, add your user to the "docker" group with the following command:  
+`sudo usermod -aG docker your-user`  
+Replace "your-user" with your actual username.  
 
-This will initiate the build process for the docker container. Any updates to this process should be implemented through the [Dockerfile](./Dockerfile) in the root of this repo. 
+5. Finally, start the Docker service with the following command:
+`sudo systemctl start docker`  
+On some systems, you may need to use a different command to start the Docker service.  
 
-### Run
+#### Building the container locally
+Git Clone this repo locally, open a terminal or command prompt and build the container with the following command:   
+`docker build . -t "os-jupyter"`  
+This builds the container with the name `os-jupyter`, however the user can choose whatever name they wish.  
+Once the container is built, to run the container execute:  
+`docker run -p 127.0.0.1:8888:8888 os-jupyter`  
+This will start the `os-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
+In some instances a different IP or port maybe needed.
 
-To run the container with no security, build or pull the container and execute:  
+#### Pulling the container from dockerhub
+In a terminal or command prompt, pull the container from dockerhub
+`docker pull nrel/docker-openstudio-jupyter`  
+Once the container is pulled locally, to run the container execute:  
+`docker run -p 127.0.0.1:8888:8888 docker-openstudio-jupyter`  
+This will start the `docker-openstudio-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
+In some instances a different IP or port maybe needed.  
 
->`docker run -p 127.0.0.1:8888:8888 os-jupyter`
-
-# Known Issues
-
-Please submit issues on the project's [Github](https://github.com/nrel/docker-openstudio-jupyter) page. 
+Please submit issues on the project's [Github](https://github.com/NREL/docker-openstudio-jupyter/issues) page. 
