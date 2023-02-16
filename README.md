@@ -35,18 +35,29 @@ On some systems, you may need to use a different command to start the Docker ser
 #### Building the container locally
 Git Clone this repo locally, open a terminal or command prompt and build the container with the following command:   
 `docker build . -t "os-jupyter"`  
-This builds the container with the name `os-jupyter`, however the user can choose whatever name they wish.  
-Once the container is built, to run the container execute:  
+This builds the container with the name `os-jupyter`.   
+Once the container is built, to run the container without the full Server stack execute:  
 `docker run -p 127.0.0.1:8888:8888 os-jupyter`  
 This will start the `os-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
 In some instances a different IP or port maybe needed.
 
-#### Pulling the container from dockerhub
-In a terminal or command prompt, pull the container from dockerhub
-`docker pull nrel/docker-openstudio-jupyter`  
-Once the container is pulled locally, to run the container execute:  
-`docker run -p 127.0.0.1:8888:8888 docker-openstudio-jupyter`  
-This will start the `docker-openstudio-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
-In some instances a different IP or port maybe needed.  
+#### Starting a Full Stack OpenStudio-Server and Notebook
+To stand up a full stack of the OpenStudio-Server with one worker to submit jobs to, open a terminal or command prompt in the root of the repo and use the following commands:  
 
-Please submit issues on the project's [Github](https://github.com/NREL/docker-openstudio-jupyter/issues) page. 
+`docker swarm init`  
+`docker stack deploy osserver --compose-file=docker-compose.yml`  
+
+This will start the docker swarm and should print out an IP address to the screen.  This is the same IP address from `docker info` and looking for the **Node Address**.  Note the port is not needed, just the IP address.  In some instances the full file path to the docker-compose.yml file will be needed.  You can verify that the stack has started by using the command:  
+
+`docker service ls`  
+
+and looking for 1/1 and not 0/1 for all the services. If you have enough base computing resources allocated to Docker on your computer, you can start more worker services by  
+
+`docker service scale osserver_worker=X`  where **X** is the integer number of workers you want.  
+
+Verify that the Server Stack has started by opening [localhost:8080](http://localhost:8080/) in a web browser.  You should see the server main GUI page.  
+
+The notebooks can be accessed by opening [localhost:8888](http://localhost:8888/) in a web browser.
+ 
+
+Please submit issues or enhancement requests on the project's [Github](https://github.com/NREL/docker-openstudio-jupyter/issues) page. 
