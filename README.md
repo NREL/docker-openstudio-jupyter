@@ -40,11 +40,11 @@ On some systems, you may need to use a different command to start the Docker ser
 
 #### Building the container locally
 Git Clone this repo locally, open a terminal or command prompt and build the container with the following command:   
-`docker build . -t "os-jupyter"`  
-This builds the container with the name `os-jupyter`.   
+`docker build . -t "openstudio-jupyter"`  
+This builds the container with the name `openstudio-jupyter`.   
 Once the container is built, to run the container without the full Server stack execute:  
-`docker run -p 127.0.0.1:8888:8888 os-jupyter`  
-This will start the `os-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
+`docker run -p 127.0.0.1:8888:8888 openstudio-jupyter`  
+This will start the `openstudio-jupyter` container, using the localhost IP of 127.0.0.1, on port 8888.  
 In some instances a different IP or port maybe needed.
 
 #### Starting a Full Stack OpenStudio-Server and Notebook
