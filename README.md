@@ -43,11 +43,16 @@ In some instances a different IP or port maybe needed.
 
 #### Starting a Full Stack OpenStudio-Server and Notebook
 To stand up a full stack of the OpenStudio-Server with one worker to submit jobs to, open a terminal or command prompt in the root of the repo and use the following commands:  
+
 `docker swarm init`  
 `docker stack deploy osserver --compose-file=docker-compose.yml`  
+
 This will start the docker swarm and should print out an IP address to the screen.  This is the same IP address from `docker info` and looking for the **Node Address**.  Note the port is not needed, just the IP address.  In some instances the full file path to the docker-compose.yml file will be needed.  You can verify that the stack has started by using the command:  
+
 `docker service ls`  
+
 and looking for 1/1 and not 0/1 for all the services. If you have enough base computing resources allocated to Docker on your computer, you can start more worker services by  
+
 `docker service scale osserver_worker=X`  where **X** is the integer number of workers you want.  
 
 Verify that the Server Stack has started by opening [localhost:8080](http://localhost:8080/) in a web browser.  You should see the server main GUI page.  
