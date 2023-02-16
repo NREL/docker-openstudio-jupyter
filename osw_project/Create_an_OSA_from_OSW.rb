@@ -1,5 +1,5 @@
 
-gem 'openstudio-analysis', '1.2.1.pre.7'
+gem 'openstudio-analysis', '1.3.0'
 require 'openstudio-analysis'
 
 OpenStudio::Analysis::VERSION
