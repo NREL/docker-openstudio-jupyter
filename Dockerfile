@@ -73,5 +73,14 @@ COPY ./osw_project /examples/notebooks
 #trust all notebooks
 RUN find /examples/notebooks -name '*.ipynb' -exec jupyter trust {} \;
 
+#set version
+COPY version.txt /app/version.txt
+
+RUN VERSION=$(cat /app/version.txt | tr -d '\r\n') && \
+    echo "export VERSION=$VERSION" >> /etc/profile
+
+# Set the environment variable using the ENTRYPOINT command
+ENTRYPOINT ["/bin/sh", "-c", ". /etc/profile && exec \"$@\"", "--"]
+
 EXPOSE 8888
 CMD ["jupyter-lab", "--ip=0.0.0.0","--port=8888" ,"--no-browser", "--allow-root", "--LabApp.token=''"]
