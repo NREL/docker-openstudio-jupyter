@@ -7,9 +7,15 @@ The examples include
 2. Creating an URBANopt OpenStudio Analysis (OSA) workflow for optimization
 3. Submitting an URBANopt job to a cloud based Server  
 #### Creating OpenStudio Workflow (OSW) and OpenStudio Analysis (OSA) jsons  
-1. Creating an OSW json to run several Measures on an example OpenStudio Model (OSM)  
-2. Adding a Calibration Measure to the OSW
-3. Turning the OSW into an OSA to use Algorithms such as Sensitivity Analysis and Optimization.  
+1. Creating an OSW json to run several Measures on an example OpenStudio Model (OSM)   
+    - [BaselineModel.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/BaselineModel.ipynb)  
+2. Adding a Calibration Measure to the OSW  
+    - [Calibration.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Calibration.ipynb)
+3. Turning the OSW into an OSA to use Algorithms such as Sensitivity Analysis and Optimization.  Most of these notebooks are broken up into two parts.  The first one **Creates** the OSA and the second one **Submits** the OSA job to a running OS-Server.  
+    - [Create_Morris_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_Morris_OSA.ipynb)   - [Submit_morris_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_morris_OSA.ipynb)  
+    - [Create_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_LHS_OSA.ipynb)    - [Submit_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_LHS_OSA.ipynb)  
+4. There is a ruby file example as well  
+    - [Create_an_OSA_from_OSW.rb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_an_OSA_from_OSW.rb)
 
 The notebooks have several dependencies which are pre-installed in a Docker container.
 The intent is to make that part of the process easier for newer users.
