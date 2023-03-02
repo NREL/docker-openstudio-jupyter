@@ -1,0 +1,62 @@
+{
+   "created_at" : "20230302T162505Z",
+   "hash" : "C84B4FCB",
+   "seed_file" : "C:/Projects/Notebooks/osw_project/Optimization/seeds/example_model.osm",
+   "steps" : 
+   [
+      {
+         "arguments" : 
+         {
+            "r_value_perc_change" : 10.0
+         },
+         "measure_dir_name" : "measures/ExteriorWallThermalPropertiesPercentChange"
+      },
+      {
+         "arguments" : 
+         {
+            "r_value_perc_change" : 10.0
+         },
+         "measure_dir_name" : "measures/RoofThermalPropertiesPercentChange"
+      },
+      {
+         "arguments" : 
+         {
+            "coil" : "*All Gas Heating Coils*",
+            "coil_efficiency_perc_change" : 10.0
+         },
+         "measure_dir_name" : "measures/CoilHeatingGasPercentChange"
+      },
+      {
+         "arguments" : 
+         {
+            "coil" : "*All DX Cooling Coils*",
+            "rated_cop_perc_change" : 10.0
+         },
+         "measure_dir_name" : "measures/CoilCoolingDXSingleSpeedPercentChange"
+      },
+      {
+         "arguments" : 
+         {
+            "fan" : "*All Fans*",
+            "fan_efficiency_perc_change" : 10.0
+         },
+         "measure_dir_name" : "measures/FansPercentChange"
+      },
+      {
+         "arguments" : 
+         {
+            "ElectricEquipment_perc_change" : 10.0,
+            "lights_perc_change" : 10.0,
+            "space" : "*All Spaces*",
+            "space_type" : "*All SpaceTypes*"
+         },
+         "measure_dir_name" : "measures/GeneralCalibrationMeasurePercentChange"
+      },
+      {
+         "arguments" : {},
+         "measure_dir_name" : "measures/openstudio_results"
+      }
+   ],
+   "updated_at" : "20230302T162536Z",
+   "weather_file" : "weather/USA_CO_Golden-NREL.724666_TMY3.epw"
+}
