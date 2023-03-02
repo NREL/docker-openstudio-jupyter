@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>calibration_reports_enhanced</name>
   <uid>e6642d40-7366-4647-8724-53a37991d668</uid>
-  <version_id>96f837a8-f6af-4c34-84fc-c26b2ec2feba</version_id>
-  <version_modified>20221115T231440Z</version_modified>
+  <version_id>c6e9061a-eb08-4c7b-b5e4-ebd65621c51a</version_id>
+  <version_modified>20230301T191321Z</version_modified>
   <xml_checksum>2C8A3EEF</xml_checksum>
   <class_name>CalibrationReportsEnhanced</class_name>
   <display_name>Calibration Reports Enhanced</display_name>
@@ -311,28 +311,10 @@
   </attributes>
   <files>
     <file>
-      <filename>ExampleModel.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>5A314A0A</checksum>
-    </file>
-    <file>
-      <filename>USA_CO_Golden-NREL.724666_TMY3.epw</filename>
-      <filetype>epw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>BDF687C1</checksum>
-    </file>
-    <file>
       <filename>report.html.in</filename>
       <filetype>in</filetype>
       <usage_type>resource</usage_type>
       <checksum>B112BA5D</checksum>
-    </file>
-    <file>
-      <filename>ExampleModel_FuelOil.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4FC9D41F</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -351,12 +333,6 @@
       <filetype>md</filetype>
       <usage_type>license</usage_type>
       <checksum>64FFEBDE</checksum>
-    </file>
-    <file>
-      <filename>CalibrationReportsEnhanced_Test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B3C08DB0</checksum>
     </file>
     <file>
       <version>
