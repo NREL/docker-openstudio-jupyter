@@ -1,4 +1,4 @@
-## Jupyter Notebooks with OpenStudio SDK use examples in a Docker container.
+## Jupyter Notebooks with OpenStudio SDK and OpenStudio-Analysis gem examples in a Docker container.
 
 This repo contains a Docker container with IRuby Jupyter notebooks with examples using various functionality of the OpenStudio SDK.
 The examples include  
