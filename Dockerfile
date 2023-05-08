@@ -46,15 +46,16 @@ RUN cd /opt && \
 RUN gem install urbanopt-cli rubyzip
 
 #install OpenStudio-analysis-gem
-RUN cd /opt && \
-    mkdir OpenStudio-analysis-gem && \
-    cd OpenStudio-analysis-gem && \
-    git clone https://github.com/NREL/OpenStudio-analysis-gem.git . && \
-    git checkout develop && \
-    bundle install && \
-    gem build openstudio-analysis.gemspec && \
-    gem install --local ./openstudio-analysis-1.3.0.gem
-    
+#RUN cd /opt && \
+#    mkdir OpenStudio-analysis-gem && \
+#    cd OpenStudio-analysis-gem && \
+#    git clone https://github.com/NREL/OpenStudio-analysis-gem.git . && \
+#    git checkout develop && \
+#    bundle install && \
+#    gem build openstudio-analysis.gemspec && \
+#    gem install --local ./openstudio-analysis-1.3.0.gem
+RUN gem install openstudio-analysis
+        
 #install OpenStudio Measure Gems
 RUN gem install openstudio-calibration
 RUN gem install openstudio-common-measures    
