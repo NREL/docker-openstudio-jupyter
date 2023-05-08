@@ -36,14 +36,14 @@
       {
          "arguments" : 
          {
-            "ElectricEquipment_perc_change" : 10.0,
-            "infil_perc_change" : 10.0,
-            "lights_perc_change" : 10.0,
-            "mass_perc_change" : 10.0,
-            "people_perc_change" : 10.0,
+            "ElectricEquipment_perc_change" : 0.0,
+            "infil_perc_change" : 0.0,
+            "lights_perc_change" : 0.0,
+            "mass_perc_change" : 15.0,
+            "people_perc_change" : -11.0,
             "space" : "*All Spaces*",
             "space_type" : "*All SpaceTypes*",
-            "vent_perc_change" : 10.0
+            "vent_perc_change" : 0.0
          },
          "measure_dir_name" : "measures/GeneralCalibrationMeasurePercentChange"
       },
