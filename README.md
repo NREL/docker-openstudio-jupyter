@@ -2,18 +2,20 @@
 
 This repo contains a Docker container with IRuby Jupyter notebooks with examples using various functionality of the OpenStudio SDK.
 The examples include  
-#### URBANopt
+#### URBANopt  [Notebooks](https://github.com/NREL/docker-openstudio-jupyter/blob/master/notebooks)
 1. Creating an URBANopt workflow
 2. Creating an URBANopt OpenStudio Analysis (OSA) workflow for optimization
 3. Submitting an URBANopt job to a cloud based Server  
-#### Creating OpenStudio Workflow (OSW) and OpenStudio Analysis (OSA) jsons  
+#### Creating OpenStudio Workflow (OSW) and OpenStudio Analysis (OSA) jsons  [Notebooks](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project)
 1. Creating an OSW json to run several Measures on an example OpenStudio Model (OSM)   
     - [BaselineModel.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/BaselineModel.ipynb)  
 2. Adding a Calibration Measure to the OSW  
     - [Calibration.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Calibration.ipynb)
 3. Turning the OSW into an OSA to use Algorithms such as Sensitivity Analysis and Optimization.  Most of these notebooks are broken up into two parts.  The first one **Creates** the OSA and the second one **Submits** the OSA job to a running OS-Server.  
     - [Create_Morris_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_Morris_OSA.ipynb)   - [Submit_morris_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_morris_OSA.ipynb)  
-    - [Create_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_LHS_OSA.ipynb)    - [Submit_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_LHS_OSA.ipynb)  
+    - [Create_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_LHS_OSA.ipynb)    - [Submit_LHS_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_LHS_OSA.ipynb)
+    - [Create_NSGA2_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_NSGA2_OSA.ipynb)    - [Submit_NSGA2_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_NSGA2_OSA.ipynb)
+    - [Create_Calibration_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_Calibration_OSA.ipynb)    - [Submit_Calibration_OSA.ipynb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Submit_Calibration_OSA.ipynb)
 4. There is a ruby file example as well  
     - [Create_an_OSA_from_OSW.rb](https://github.com/NREL/docker-openstudio-jupyter/blob/master/osw_project/Create_an_OSA_from_OSW.rb)
 
