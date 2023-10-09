@@ -1,36 +1,6 @@
 # *******************************************************************************
-# OpenStudio(R), Copyright (c) 2008-2020, Alliance for Sustainable Energy, LLC.
-# All rights reserved.
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#
-# (1) Redistributions of source code must retain the above copyright notice,
-# this list of conditions and the following disclaimer.
-#
-# (2) Redistributions in binary form must reproduce the above copyright notice,
-# this list of conditions and the following disclaimer in the documentation
-# and/or other materials provided with the distribution.
-#
-# (3) Neither the name of the copyright holder nor the names of any contributors
-# may be used to endorse or promote products derived from this software without
-# specific prior written permission from the respective party.
-#
-# (4) Other than as required in clauses (1) and (2), distributions in any form
-# of modifications or other derivative works may not use the "OpenStudio"
-# trademark, "OS", "os", or any other confusingly similar designation without
-# specific prior written permission from Alliance for Sustainable Energy, LLC.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER(S), ANY CONTRIBUTORS, THE
-# UNITED STATES GOVERNMENT, OR THE UNITED STATES DEPARTMENT OF ENERGY, NOR ANY OF
-# THEIR EMPLOYEES, BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
-# OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# OpenStudio(R), Copyright (c) Alliance for Sustainable Energy, LLC.
+# See also https://openstudio.net/license
 # *******************************************************************************
 
 # see the URL below for information on how to write OpenStudio measures
@@ -42,19 +12,22 @@ require 'json'
 require 'erb'
 
 # start the measure
-class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
+class TimeseriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
   # human readable name
   def name
-    return "TimeSeries Objective Function"
+    return 'TimeSeries Objective Function'
   end
+
   # human readable description
   def description
-    return "Creates Objective Function from Timeseries Data"
+    return 'Creates Objective Function from Timeseries Data'
   end
+
   # human readable description of modeling approach
   def modeler_description
     return "Creates Objective Function from Timeseries Data.  The measure applies a Norm at each timestep between the difference of CSV metered data and SQL model data. A timeseries plot can also be created.  Possible outputs are 'cvrmse', 'nmbe', 'simdata' = sum of the simulated data, 'csvdata' = sum of metered data, 'diff' = P Norm between the metered and simulated data if Norm is 1 or 2, else its just the Difference."
   end
+
   # define the arguments that the user will input
   def arguments(model = nil)
     args = OpenStudio::Measure::OSArgumentVector.new
@@ -98,7 +71,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
 
     years = OpenStudio::Measure::OSArgument.makeBoolArgument('year', true)
     years.setDisplayName('Year in csv data timestamp')
-    years.setDescription('Is the Year in the csv data timestamp => mm:dd:yy or mm:dd (true/false)')
+    years.setDescription('Is the Year in the csv data timestamp => mm/dd/yyyy or mm/dd (true/false)')
     years.setDefaultValue(true)
     args << years
 
@@ -172,7 +145,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
     plot_name = OpenStudio::Measure::OSArgument.makeStringArgument('plot_name', true)
     plot_name.setDisplayName('Plot name')
     plot_name.setDescription('Name to include in reporting file name.')
-    plot_name.setDefaultValue('')
+    plot_name.setDefaultValue('plot_name')
     args << plot_name
 
     verbose_messages = OpenStudio::Measure::OSArgument.makeBoolArgument('verbose_messages', true)
@@ -370,11 +343,11 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
         runner.registerInfo("available EnvPeriod: #{env_s}, available ReportingFrequencies: #{freqs}")
         freqs.each do |freq|
           vn = sql.availableVariableNames(env_s, freq.to_s)
-          runner.registerInfo("available variable names: #{vn}")
+          runner.registerInfo("  available ReportingFrequency: #{freq}, available variable names: #{vn}")
           vn.each do |v|
             kv = sql.availableKeyValues(env_s, freq.to_s, v)
-            runner.registerInfo("variable names: #{v}")
-            runner.registerInfo("available key value: #{kv}")
+            runner.registerInfo("    variable names: #{v}")
+            runner.registerInfo("    available key value: #{kv}")
           end
         end
       end
@@ -382,63 +355,63 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
     runner.registerInfo("year: #{years}")
     runner.registerInfo("seconds: #{seconds}")
     if !years && seconds
-      # mm:dd hh:mm:ss
+      # mm/dd hh:mm:ss
       # check day time splits into two valid parts
       if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
         # check remaining splits are valid
         if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil? && !csv[1][0].split(' ')[1].split(':')[2].nil?
-          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd hh:mm:ss")
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm/dd hh:mm:ss")
         else
-          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd hh:mm:ss")
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm/dd hh:mm:ss")
           return false
         end
       else
-        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd hh:mm:ss")
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm/dd hh:mm:ss")
         return false
       end
     elsif !years && !seconds
-      # mm:dd hh:mm
+      # mm/dd hh:mm
       # check day time splits into two valid parts
       if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
         # check remaining splits are valid
         if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil?
-          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd hh:mm")
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm/dd hh:mm")
         else
-          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd hh:mm")
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm/dd hh:mm")
           return false
         end
       else
-        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd hh:mm")
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm/dd hh:mm")
         return false
       end
     elsif years && !seconds
-      # mm:dd:yy hh:mm
+      # mm/dd/yyyy hh:mm
       # check day time splits into two valid parts
       if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
         # check remaining splits are valid
         if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[0].split('/')[2].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil?
-          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd:yy hh:mm")
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm/dd/yyyy hh:mm")
         else
-          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd:yy hh:mm")
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm/dd/yyyy hh:mm")
           return false
         end
       else
-        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd:yy hh:mm")
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm/dd/yyyy hh:mm")
         return false
       end
     elsif years && seconds
-      # mm:dd:yy hh:mm:ss
+      # mm/dd/yyyy hh:mm:ss
       # check day time splits into two valid parts
       if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
         # check remaining splits are valid
         if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[0].split('/')[2].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil? && !csv[1][0].split(' ')[1].split(':')[2].nil?
-          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd:yy hh:mm:ss")
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm/dd/yyyy hh:mm:ss")
         else
-          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd:yy hh:mm:ss")
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm/dd/yyyy hh:mm:ss")
           return false
         end
       else
-        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd:yy hh:mm:ss")
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm/dd/yyyy hh:mm:ss")
         return false
       end
     end
@@ -543,9 +516,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
             if year.nil?
               dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]), day)
             else
-              dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]),day,year) #MS uncomment
-              # hack since year is not in the sql file correctly
-              # dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]), day) #MS comment
+              dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]),day,year)
             end
             tim = if sec.nil?
                     OpenStudio::Time.new(0, hou, min, 0)
@@ -555,7 +526,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
             dtm = OpenStudio::DateTime.new(dat, tim)
             unless dtm >= first_date && dtm <= last_date
               if warning_messages
-                # runner.registerWarning("CSV DateTime #{dtm} is not in SQL Timeseries Dates")
+                runner.registerWarning("CSV DateTime #{dtm} is not in SQL Timeseries Dates")
               end
               next
             end
@@ -661,7 +632,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
 
         if algorithm_download
           require 'csv'
-          CSV.open("timeseries#{plot_name}.csv", 'wb') do |csv|
+          CSV.open("timeseries_#{plot_name}.csv", 'wb') do |csv|
             csv << ['Simulation Time', 'Simulated Value', 'Metered time', 'Metered Value']
             data.size.times do |i|
               csv << [data[i]['time'], data[i]['y'], data2[i]['time'], data2[i]['y']]
@@ -690,7 +661,7 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
         Dir.mkdir(directory_name) unless File.exist?(directory_name)
         FileUtils.cp("timeseries_#{csv_var}.json", directory_name)
         FileUtils.cp("allseries_#{csv_var}.json", directory_name)
-        FileUtils.cp("timeseries#{plot_name}.csv", directory_name)
+        FileUtils.cp("timeseries_#{plot_name}.csv", directory_name)
       end
     end
     diff = Math.sqrt(diff) if norm == 2
@@ -743,4 +714,4 @@ class TimeSeriesObjectiveFunction < OpenStudio::Measure::ReportingMeasure
 end
 
 # register the measure to be used by the application
-TimeSeriesObjectiveFunction.new.registerWithApplication
+TimeseriesObjectiveFunction.new.registerWithApplication
