@@ -7,8 +7,8 @@
 #  JupyterLab application directory is  /usr/local/share/jupyter/lab
 
 #may include suffix
-ARG OPENSTUDIO_VERSION=3.5.1
-FROM nrel/openstudio:3.5.1 as base
+ARG OPENSTUDIO_VERSION=3.6.1
+FROM nrel/openstudio:3.6.1 as base
 MAINTAINER Brian Ball brian.ball@nrel.gov
 
 ENV DEBIAN_FRONTEND=noninteractive
