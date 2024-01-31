@@ -69,3 +69,6 @@ The notebooks can be accessed by opening [localhost:8888](http://localhost:8888/
  
 
 Please submit issues or enhancement requests on the project's [Github](https://github.com/NREL/docker-openstudio-jupyter/issues) page. 
+
+## License
+This project is distributed under a BSD-3 type License. For more details, see the [LICENSE.md](LICENSE.md) file.
