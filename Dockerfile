@@ -13,7 +13,7 @@ MAINTAINER Brian Ball brian.ball@nrel.gov
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get -y upgrade && apt-get install -y \
   ca-certificates \
   emacs \
   git \
@@ -31,7 +31,9 @@ RUN pip3 install virtualenv
 RUN pip3 install --ignore-installed pyzmq terminado 
 RUN pip3 install jupyterlab
 
-RUN gem install cztop iruby rest-client open-uri && \
+RUN gem install czmq-ffi-gen -v 1.0.0 && \
+    gem install cztop -v 1.0.0 && \
+    gem install iruby rest-client open-uri && \
     iruby register --force
 
 #install OpenStudio-server
@@ -54,6 +56,7 @@ RUN gem install urbanopt-cli rubyzip
 #    bundle install && \
 #    gem build openstudio-analysis.gemspec && \
 #    gem install --local ./openstudio-analysis-1.3.0.gem
+RUN gem install nokogiri -v 1.11.7
 RUN gem install openstudio-analysis
         
 #install OpenStudio Measure Gems
