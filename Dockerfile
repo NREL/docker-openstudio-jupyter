@@ -7,8 +7,8 @@
 #  JupyterLab application directory is  /usr/local/share/jupyter/lab
 
 #may include suffix
-ARG OPENSTUDIO_VERSION=3.6.1
-FROM nrel/openstudio:3.6.1 as base
+ARG OPENSTUDIO_VERSION=3.9.0
+FROM nrel/openstudio:3.9.0 as base
 MAINTAINER Brian Ball brian.ball@nrel.gov
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -87,4 +87,4 @@ RUN VERSION=$(cat /app/version.txt | tr -d '\r\n') && \
 ENTRYPOINT ["/bin/sh", "-c", ". /etc/profile && exec \"$@\"", "--"]
 
 EXPOSE 8888
-CMD ["jupyter-lab", "--ip=0.0.0.0","--port=8888" ,"--no-browser", "--allow-root", "--LabApp.token=''"]
+CMD ["jupyter-lab", "--ip=0.0.0.0","--port=8888" ,"--no-browser", "--allow-root", "--LabApp.token=''", "--NotebookApp.disable_check_xsrf=True"]
