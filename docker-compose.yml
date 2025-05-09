@@ -23,7 +23,7 @@ services:
           - node.role == manager
     command: "redis-server --requirepass openstudio"
   web:
-    image: nrel/openstudio-server:3.6.1-4
+    image: nrel/openstudio-server:3.9.0
     ports:
       - "8080:80"
       - "80:80"
@@ -48,7 +48,7 @@ services:
           - node.role == manager
     command: /usr/local/bin/start-server
   web-background:
-    image: nrel/openstudio-server:3.6.1-4
+    image: nrel/openstudio-server:3.9.0
     environment:
       - OS_SERVER_NUMBER_OF_WORKERS=1
       - QUEUES=background,analyses
@@ -69,7 +69,7 @@ services:
           - node.role == manager
     command: /usr/local/bin/start-web-background
   worker:
-    image: nrel/openstudio-server:3.6.1-4
+    image: nrel/openstudio-server:3.9.0
     environment:
       - QUEUES=simulations
       - COUNT=1
@@ -89,7 +89,7 @@ services:
       endpoint_mode: dnsrr
     command: /usr/local/bin/start-workers
   rserve:
-    image: nrel/openstudio-rserve:3.6.1-4
+    image: nrel/openstudio-rserve:3.9.0
     volumes:
       - osdata:/mnt/openstudio
     depends_on:
